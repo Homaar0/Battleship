@@ -17,16 +17,26 @@ public class Main {
 		int col2;
 		try {
 			row1 = input.charAt(0);
-			col1 =  Character.getNumericValue(input.charAt(1));
-			row2 = input.charAt(3);
-			col2 = Character.getNumericValue(input.charAt(4));
-			if (row1 == row2 | col1 == col2) {
+			col1 = input.charAt(2) == ' ' ? Character.getNumericValue(input.charAt(1)) : input.charAt(2) == '0' && input.charAt(1) == '1'? 10 : 11;			
+			row2 = input.charAt(2) == ' ' ? input.charAt(3) : input.charAt(4);
+			if (input.charAt(2) == ' ') {
+				col2 = input.charAt(5) == '\n' ? Character.getNumericValue(input.charAt(4)) : input.charAt(5) == '0' && input.charAt(4) == '1'? 10 : 11;
+			} else {
+				col2 = input.charAt(6) == '\n' ? Character.getNumericValue(input.charAt(5)) : input.charAt(6) == '0' && input.charAt(5) == '1'? 10 : 11;
+			}
+			
+			if ((row1 == row2 | col1 == col2) && (row1 <= 'J' && row2 <= 'J') && (col1 <= 10 && col2 <= 10)) {
 				//System.out.println("OK!");
+				Ship ship = new Ship(row1, col1, row2, col2);
+				System.out.println("Length: " + ship.getLength());
+				System.out.print("Parts: ");
+				ship.printParts();
 			} else {
 				System.out.println("Error!");
 			}
 		} catch (Exception e){
 			System.out.println("Error!");
+			System.out.println("Catched exception e");
 		}
 		
 	}
