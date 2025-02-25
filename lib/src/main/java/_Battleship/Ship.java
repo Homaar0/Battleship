@@ -7,6 +7,7 @@ public class Ship {
 	private int col2;
 	private int lengthCalc;
 	private ShipType type;
+	private boolean vertical;
 	
 	public Ship(char row1, int col1, char row2, int col2, ShipType type) {
 		this.row1 = row1;
@@ -50,8 +51,36 @@ public class Ship {
 		return this.lengthCalc;
 	}
 	
+	void setVerticality() {
+		if (col1 == col2) {
+			vertical =true;
+		} else {
+			vertical = false;
+		}
+	}
+	
+	public char getRow1() {
+		return this.row1;
+	}
+	
+	public int getCol1() {
+		return this.col1;
+	}
+	
+	public char getRow2() {
+		return this.row2;
+	}
+	
+	public int getCol2() {
+		return this.col2;
+	}
 	public ShipType getType() {
 		return this.type;
+	}
+	
+	boolean isVertical() {
+		this.setVerticality();
+		return this.vertical;
 	}
 	
 	public void printParts() {
@@ -70,6 +99,8 @@ public class Ship {
 		}
 		System.out.println();
 	}
+	
+	
 	
 	boolean checkLength() {
 		this.calculateLengthCalc();

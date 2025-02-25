@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Game {
 	
 	boolean isRecursivelyCalled = false;
+	Field field = new Field();
 	Ship aircarrier = new Ship(ShipType.AIRCARRIER);
 	Ship battleship = new Ship(ShipType.BATTLESHIP);
 	Ship submarine = new Ship(ShipType.SUBMARINE);
@@ -13,18 +14,18 @@ public class Game {
 	
 	
 	void initialization() {
-		Field field = new Field();
+		
 		field.print();
 		placeShip(aircarrier);
-		
+		field.print();
 		placeShip(battleship);
-		
+		field.print();
 		placeShip(submarine);
-		
+		field.print();
 		placeShip(cruiser);
-		
+		field.print();
 		placeShip(destroyer);
-		
+		field.print();
 	}
 	
 	void placeShip(Ship ship) {
@@ -66,7 +67,8 @@ public class Game {
 		}
 		
 		if (ship.checkLength()) {
-			printShipData(ship);
+			putShipInCells(ship);
+			//printShipData(ship);
 			isRecursivelyCalled = false;
 		} else if (shipExist) {
 			System.out.println("Error! Wrong length of the " + ship.getType().getShipName() + "! Try again:");
@@ -82,6 +84,22 @@ public class Game {
 		System.out.println("Length: " + ship.getLengthCalc());
 		System.out.print("Parts: ");
 		ship.printParts();
+	}
+	
+	void putShipInCells(Ship ship) { //this method asumes everithing with ship is in order and should be called only where it is checked
+		if (ship.isVertical()) {
+			char startRow = (char) Math.min(ship.getRow2(), ship.getRow1());
+			char stopRow = (char) Math.max(ship.getRow2(), ship.getRow1());
+			for (char i = startRow; i <= stopRow; i++) {
+				this.field.putShip(i, ship.getCol1());
+			}
+		} else {
+			int startCol = Math.min(ship.getCol2(), ship.getCol1());
+			int stopCol = Math.max(ship.getCol2(), ship.getCol1());
+			for (int i = startCol; i <= stopCol; i++) {
+				this.field.putShip(ship.getRow1(), i);
+			}
+		}		
 	}
 
 }
