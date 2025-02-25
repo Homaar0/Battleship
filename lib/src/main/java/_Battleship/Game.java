@@ -70,7 +70,7 @@ public class Game {
 			//System.out.println("Catched exception e");
 		}
 		
-		if (ship.checkLength() && !willTouch(ship) && !doesOverlap(ship)) {
+		if (shipExist && ship.checkLength() && !willTouch(ship) && !doesOverlap(ship)) {
 			putShipInCells(ship);
 			//printShipData(ship);
 			isRecursivelyCalled = false;
@@ -78,11 +78,11 @@ public class Game {
 			System.out.println("Error! Wrong length of the " + ship.getType().getShipName() + "! Try again:");
 			isRecursivelyCalled = true;
 			placeShip(ship);
-		} else if(doesOverlap(ship)) {
+		} else if(shipExist && doesOverlap(ship)) {
 			System.out.println("Error! Wrong ship location! Try again:");
 			isRecursivelyCalled = true;
 			placeShip(ship);
-		} else if(willTouch(ship)) {
+		} else if(shipExist && willTouch(ship)) {
 			System.out.println("Error! You placed it too close to another one. Try again:");
 			isRecursivelyCalled = true;
 			placeShip(ship);
