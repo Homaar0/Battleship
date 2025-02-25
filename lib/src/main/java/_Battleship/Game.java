@@ -60,9 +60,13 @@ public class Game {
 				shipExist = true;
 			} else {
 				System.out.println("Error!");
+				isRecursivelyCalled = true;
+				placeShip(ship);
 			}
 		} catch (Exception e){
 			System.out.println("Error!");
+			isRecursivelyCalled = true;
+			placeShip(ship);
 			//System.out.println("Catched exception e");
 		}
 		
