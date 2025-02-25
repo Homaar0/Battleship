@@ -15,7 +15,7 @@ public class Cell {
 		return String.valueOf(this.cellRow + this.cellCol);
 	}
 	
-	public void putShip() {
+	public void setShip() {
 		this.ship = true;
 	}
 	

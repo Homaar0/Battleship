@@ -32,7 +32,11 @@ public class Field {
 	}
 	
 	void putShip(char row, int col) {
-		cells[row - 'A'][col - 1].putShip();
+		cells[row - 'A'][col - 1].setShip();
+	}
+	
+	boolean hasShip(char row, int col) {
+		return cells[row - 'A'][col - 1].hasShip();
 	}
 
 }

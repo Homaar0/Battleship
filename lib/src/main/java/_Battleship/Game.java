@@ -66,12 +66,20 @@ public class Game {
 			//System.out.println("Catched exception e");
 		}
 		
-		if (ship.checkLength()) {
+		if (ship.checkLength() && !willTouch(ship) && !doesOverlap(ship)) {
 			putShipInCells(ship);
 			//printShipData(ship);
 			isRecursivelyCalled = false;
-		} else if (shipExist) {
+		} else if (shipExist && !willTouch(ship) && !doesOverlap(ship)) {
 			System.out.println("Error! Wrong length of the " + ship.getType().getShipName() + "! Try again:");
+			isRecursivelyCalled = true;
+			placeShip(ship);
+		} else if(doesOverlap(ship)) {
+			System.out.println("Error! Wrong ship location! Try again:");
+			isRecursivelyCalled = true;
+			placeShip(ship);
+		} else if(willTouch(ship)) {
+			System.out.println("Error! You placed it too close to another one. Try again:");
 			isRecursivelyCalled = true;
 			placeShip(ship);
 		} else {
@@ -86,12 +94,12 @@ public class Game {
 		ship.printParts();
 	}
 	
-	void putShipInCells(Ship ship) { //this method asumes everithing with ship is in order and should be called only where it is checked
+	void putShipInCells(Ship ship) { //this method assumes everything with ship is in order and should be called only where it is checked
 		if (ship.isVertical()) {
 			char startRow = (char) Math.min(ship.getRow2(), ship.getRow1());
 			char stopRow = (char) Math.max(ship.getRow2(), ship.getRow1());
 			for (char i = startRow; i <= stopRow; i++) {
-				this.field.putShip(i, ship.getCol1());
+				this.field.putShip(i, ship.getCol1()); 				
 			}
 		} else {
 			int startCol = Math.min(ship.getCol2(), ship.getCol1());
@@ -100,6 +108,74 @@ public class Game {
 				this.field.putShip(ship.getRow1(), i);
 			}
 		}		
+	}
+	
+	boolean doesOverlap(Ship ship) {
+		boolean overlap = false;
+		if (ship.isVertical()) {
+			char startRow = (char) Math.min(ship.getRow2(), ship.getRow1());
+			char stopRow = (char) Math.max(ship.getRow2(), ship.getRow1());
+			for (char i = startRow; i <= stopRow; i++) {
+				try {
+					if (this.field.hasShip(i, ship.getCol1())) {
+						overlap = true;
+						break;
+					}	
+				} catch(Exception e) {
+					
+				} 				
+			}
+		} else {
+			int startCol = Math.min(ship.getCol2(), ship.getCol1());
+			int stopCol = Math.max(ship.getCol2(), ship.getCol1());
+			for (int i = startCol; i <= stopCol; i++) {
+				try {
+					if (this.field.hasShip((ship.getRow1()), i)) {
+						overlap = true;
+						break;
+					}
+				} catch(Exception e) {
+					
+				}
+			}
+		}		
+		return overlap;
+	}
+	
+	boolean willTouch(Ship ship) {
+		boolean touch = false;
+		if (ship.isVertical()) {
+			char startRow = (char) (Math.min(ship.getRow2(), ship.getRow1()) - 1);
+			char stopRow = (char) (Math.max(ship.getRow2(), ship.getRow1()) + 1);
+			for (char i = startRow; i <= stopRow; i++) {
+				for (int j = ship.getCol1() - 1; j <= ship.getCol1() + 1; j++) {
+					try {
+						if (this.field.hasShip(i, j)) {
+							touch = true;
+							break;
+						}	
+					} catch(Exception e) {
+					
+					}
+				}
+			}
+		} else {
+			int startCol = (Math.min(ship.getCol2(), ship.getCol1()) - 1);
+			int stopCol = (Math.max(ship.getCol2(), ship.getCol1()) + 1);
+			for (int i = startCol; i <= stopCol; i++) {
+				for (char j = (char)(ship.getRow1() - 1); j <= (char)(ship.getRow1() + 1); j++) {
+					try {
+						if (this.field.hasShip(j, i)) {
+							touch = true;
+							break;
+						}
+					} catch(Exception e) {
+					
+					}
+				}
+			}
+		}
+		return touch;
 	}
 
 }
