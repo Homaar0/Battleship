@@ -27,8 +27,9 @@ public class Game {
 		placeShip(destroyer);
 		field.print();
 		System.out.println("The game starts!");
-		field.print();
+		field.printFog();
 		takeShot();
+		field.print();
 		
 	}
 	
@@ -203,7 +204,7 @@ public class Game {
 			if ((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 )) {
 				this.field.shotAt(row, col);
 				isRecursivelyCalled = false;
-				this.field.print();
+				this.field.printFog();
 				if (this.field.hasShip(row, col)) {
 					System.out.println("You hit a ship!");
 				} else {
