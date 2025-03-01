@@ -26,6 +26,10 @@ public class Game {
 		field.print();
 		placeShip(destroyer);
 		field.print();
+		System.out.println("The game starts!");
+		field.print();
+		takeShot();
+		
 	}
 	
 	void placeShip(Ship ship) {
@@ -180,6 +184,42 @@ public class Game {
 			}
 		}
 		return touch;
+	}
+	
+	void takeShot() {
+		Scanner scanner = new Scanner(System.in);
+		if (!isRecursivelyCalled) {
+			System.out.println("Take a shot!");
+		} else {
+			System.out.println();
+		}
+		String input = scanner.nextLine();
+		char row;
+		int col;
+		try {
+			row = input.charAt(0);		
+			col = input.length() == 2 ? Character.getNumericValue(input.charAt(1)) : input.charAt(2) == '0' && input.charAt(1) == '1'? 10 : 11;
+						
+			if ((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 )) {
+				this.field.shotAt(row, col);
+				isRecursivelyCalled = false;
+				this.field.print();
+				if (this.field.hasShip(row, col)) {
+					System.out.println("You hit a ship!");
+				} else {
+					System.out.println("You missed!");
+				}
+			} else {
+				System.out.println("Error! You entered the wrong coordinates! Try again:");
+				isRecursivelyCalled = true;
+				takeShot();
+			}
+		} catch (Exception e){
+			System.out.println("Error!");
+			//isRecursivelyCalled = true;
+			//takeShot();
+			//System.out.println("Catched exception e");
+		}
 	}
 
 }
