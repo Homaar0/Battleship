@@ -52,8 +52,9 @@ public class Field {
 		}
 	}
 	
-	void putShip(char row, int col) {
+	void putShip(char row, int col, Ship ship) {
 		cells[row - 'A'][col - 1].setShip();
+		cells[row - 'A'][col - 1].setShipType(ship);
 	}
 	
 	boolean hasShip(char row, int col) {
@@ -66,6 +67,10 @@ public class Field {
 	
 	boolean isShot(char row, int col) {
 		return cells[row - 'A'][col - 1].isShot();
+	}
+	
+	Ship getShipType(char row, int col) {
+		return cells[row - 'A'][col - 1].getShipType();
 	}
 
 }

@@ -11,10 +11,23 @@ public class Game {
 	Ship submarine = new Ship(ShipType.SUBMARINE);
 	Ship cruiser = new Ship(ShipType.CRUISER);
 	Ship destroyer = new Ship(ShipType.DESTROYER);
+	boolean allSunk = false;
 	
 	
-	void initialization() {
-		
+	void gamePlay() {
+		this.initialization();
+		System.out.println("The game starts!");
+		field.printFog();
+		while(!allSunk) {
+			this.takeShot();
+			this.checkAllSunk();
+		}
+		if(allSunk) {
+			System.out.println("You sank the last ship. You won. Congratulations!");
+		}
+	}
+	
+	void initialization() {		
 		field.print();
 		placeShip(aircarrier);
 		field.print();
@@ -26,11 +39,7 @@ public class Game {
 		field.print();
 		placeShip(destroyer);
 		field.print();
-		System.out.println("The game starts!");
-		field.printFog();
-		takeShot();
-		field.print();
-		
+				
 	}
 	
 	void placeShip(Ship ship) {
@@ -108,13 +117,13 @@ public class Game {
 			char startRow = (char) Math.min(ship.getRow2(), ship.getRow1());
 			char stopRow = (char) Math.max(ship.getRow2(), ship.getRow1());
 			for (char i = startRow; i <= stopRow; i++) {
-				this.field.putShip(i, ship.getCol1()); 				
+				this.field.putShip(i, ship.getCol1(), ship); 				
 			}
 		} else {
 			int startCol = Math.min(ship.getCol2(), ship.getCol1());
 			int stopCol = Math.max(ship.getCol2(), ship.getCol1());
 			for (int i = startCol; i <= stopCol; i++) {
-				this.field.putShip(ship.getRow1(), i);
+				this.field.putShip(ship.getRow1(), i, ship);
 			}
 		}		
 	}
@@ -206,7 +215,13 @@ public class Game {
 				isRecursivelyCalled = false;
 				this.field.printFog();
 				if (this.field.hasShip(row, col)) {
+					hitShip(field.getShipType(row, col));
 					System.out.println("You hit a ship!");
+					if (field.getShipType(row, col).isSunk()) {
+						System.out.println("You sank a ship!");
+					} else {
+						
+					}
 				} else {
 					System.out.println("You missed!");
 				}
@@ -221,6 +236,14 @@ public class Game {
 			//takeShot();
 			//System.out.println("Catched exception e");
 		}
+	}
+	
+	void hitShip(Ship ship) {
+		ship.hitCell();
+	}
+	
+	void checkAllSunk() {
+		this.allSunk = this.aircarrier.isSunk() && this.battleship.isSunk() && this.cruiser.isSunk() && this.destroyer.isSunk() && this.submarine.isSunk();
 	}
 
 }

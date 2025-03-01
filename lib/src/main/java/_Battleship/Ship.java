@@ -8,6 +8,8 @@ public class Ship {
 	private int lengthCalc;
 	private ShipType type;
 	private boolean vertical;
+	private boolean sunk = false;
+	private int hitCells = 0;
 	
 	public Ship(char row1, int col1, char row2, int col2, ShipType type) {
 		this.row1 = row1;
@@ -99,9 +101,7 @@ public class Ship {
 		}
 		System.out.println();
 	}
-	
-	
-	
+		
 	boolean checkLength() {
 		this.calculateLengthCalc();
 		if (this.type.getCells() == this.lengthCalc) {
@@ -111,4 +111,14 @@ public class Ship {
 		}
 	}
 	
+	boolean isSunk() {		
+		return this.sunk;
+	}
+	
+	void hitCell() {
+		this.hitCells++;
+		if (this.type.getCells() == this.hitCells) {
+			this.sunk = true;
+		}
+	}
 }

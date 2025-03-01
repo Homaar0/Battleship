@@ -6,6 +6,7 @@ public class Cell {
 	private int cellCol;	
 	private boolean ship = false;
 	private boolean shot = false;
+	private Ship shipType;
 	
 	public Cell(char row, int col) {
 		this.cellRow = row;
@@ -32,4 +33,11 @@ public class Cell {
 		return this.shot;
 	}
 	
+	public void setShipType(Ship ship) {
+		this.shipType = ship;
+	}
+	
+	public Ship getShipType() {
+		return this.shipType;
+	}
 }
