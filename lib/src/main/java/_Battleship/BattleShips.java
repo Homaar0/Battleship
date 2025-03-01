@@ -2,26 +2,21 @@ package _Battleship;
 
 import java.util.Scanner;
 
-public class Game {
+public class BattleShips {
 	
-	boolean isRecursivelyCalled = false;
-	Field field = new Field();
-	Ship aircarrier = new Ship(ShipType.AIRCARRIER);
-	Ship battleship = new Ship(ShipType.BATTLESHIP);
-	Ship submarine = new Ship(ShipType.SUBMARINE);
-	Ship cruiser = new Ship(ShipType.CRUISER);
-	Ship destroyer = new Ship(ShipType.DESTROYER);
-	boolean allSunk = false;
+	private boolean isRecursivelyCalled = false;
+	private Field field = new Field();
+	private Ship aircarrier = new Ship(ShipType.AIRCARRIER);
+	private Ship battleship = new Ship(ShipType.BATTLESHIP);
+	private Ship submarine = new Ship(ShipType.SUBMARINE);
+	private Ship cruiser = new Ship(ShipType.CRUISER);
+	private Ship destroyer = new Ship(ShipType.DESTROYER);
+	private boolean allSunk = false;
 	
 	
-	void gamePlay() {
-		this.initialization();
-		System.out.println("The game starts!");
-		field.printFog();
-		while(!allSunk) {
-			this.takeShot();
-			this.checkAllSunk();
-		}
+	void gamePlay() {	
+		this.takeShot();
+		this.checkAllSunk();		
 		if(allSunk) {
 			System.out.println("You sank the last ship. You won. Congratulations!");
 		}
@@ -199,7 +194,7 @@ public class Game {
 	void takeShot() {
 		Scanner scanner = new Scanner(System.in);
 		if (!isRecursivelyCalled) {
-			System.out.println("Take a shot!");
+			//System.out.println("Take a shot!");
 		} else {
 			System.out.println();
 		}
@@ -210,10 +205,10 @@ public class Game {
 			row = input.charAt(0);		
 			col = input.length() == 2 ? Character.getNumericValue(input.charAt(1)) : input.charAt(2) == '0' && input.charAt(1) == '1'? 10 : 11;
 						
-			if ((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 )) {
+			if ((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 ) && !this.field.isShot(row, col)) {
 				this.field.shotAt(row, col);
 				isRecursivelyCalled = false;
-				this.field.printFog();
+				//this.field.printFog();
 				if (this.field.hasShip(row, col)) {
 					hitShip(field.getShipType(row, col));
 					System.out.println("You hit a ship!");
@@ -225,6 +220,10 @@ public class Game {
 				} else {
 					System.out.println("You missed!");
 				}
+			} else if((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 ) && this.field.isShot(row, col)) {
+				System.out.println("Error! You alredy shot here! Try again:");
+				isRecursivelyCalled = true;
+				takeShot();
 			} else {
 				System.out.println("Error! You entered the wrong coordinates! Try again:");
 				isRecursivelyCalled = true;
@@ -245,5 +244,12 @@ public class Game {
 	void checkAllSunk() {
 		this.allSunk = this.aircarrier.isSunk() && this.battleship.isSunk() && this.cruiser.isSunk() && this.destroyer.isSunk() && this.submarine.isSunk();
 	}
-
+	
+	boolean isAllSunk() {
+		return this.allSunk;
+	}
+	
+	Field getField() {
+		return this.field;
+	}
 }

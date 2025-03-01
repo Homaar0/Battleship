@@ -5,16 +5,11 @@ import java.util.*;
 
 public class Main {
 	
-	
-
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		Game game = new Game();
-		game.gamePlay();
-		
+		Players game = new Players();
+		game.play();
+		scanner.close();
 		System.exit(0);
 	}
-	
-
-
 }

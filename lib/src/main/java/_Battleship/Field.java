@@ -2,7 +2,7 @@ package _Battleship;
 
 public class Field {
 	
-	Cell[][] cells = new Cell[10][10];
+	private Cell[][] cells = new Cell[10][10];
 	
 	public Field() {
 		this.createCells();
@@ -72,5 +72,4 @@ public class Field {
 	Ship getShipType(char row, int col) {
 		return cells[row - 'A'][col - 1].getShipType();
 	}
-
 }
