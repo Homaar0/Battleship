@@ -21,11 +21,15 @@ public class Field {
 		for (char i = 'A'; i <= 'J'; i++) {
 			System.out.print(i);
 			for (int j = 1; j <= 10; j++) {
-				if (!cells[i - 'A'][j - 1].hasShip()) {
+				if (!cells[i - 'A'][j - 1].hasShip() && !cells[i - 'A'][j - 1].isShot()) {
 				    System.out.print(" ~");
-				} else {
+				} else if (cells[i - 'A'][j - 1].hasShip() && !cells[i - 'A'][j - 1].isShot()){
 					System.out.print(" O");
-				}
+				} else if (cells[i - 'A'][j - 1].hasShip() && cells[i - 'A'][j - 1].isShot()){
+					System.out.print(" X");
+				} else if (!cells[i - 'A'][j - 1].hasShip() && cells[i - 'A'][j - 1].isShot()){
+					System.out.print(" M");
+				} 
 			}
 			System.out.println();
 		}
@@ -37,6 +41,14 @@ public class Field {
 	
 	boolean hasShip(char row, int col) {
 		return cells[row - 'A'][col - 1].hasShip();
+	}
+	
+	void shotAt(char row, int col) {
+		cells[row - 'A'][col - 1].shotAt();
+	}
+	
+	boolean isShot(char row, int col) {
+		return cells[row - 'A'][col - 1].isShot();
 	}
 
 }

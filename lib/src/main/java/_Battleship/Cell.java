@@ -5,6 +5,7 @@ public class Cell {
 	private char cellRow;
 	private int cellCol;	
 	private boolean ship = false;
+	private boolean shot = false;
 	
 	public Cell(char row, int col) {
 		this.cellRow = row;
@@ -21,6 +22,14 @@ public class Cell {
 	
 	public boolean hasShip() {
 		return this.ship;
+	}
+	
+	public void shotAt() {
+		this.shot = true;
+	}
+	
+	public boolean isShot() {
+		return this.shot;
 	}
 	
 }
