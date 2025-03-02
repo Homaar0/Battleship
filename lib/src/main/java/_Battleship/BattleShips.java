@@ -205,7 +205,7 @@ public class BattleShips {
 			row = input.charAt(0);		
 			col = input.length() == 2 ? Character.getNumericValue(input.charAt(1)) : input.charAt(2) == '0' && input.charAt(1) == '1'? 10 : 11;
 						
-			if ((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 )/* && !this.field.isShot(row, col)*/) {
+			if ((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 ) && !this.field.isShot(row, col)) {
 				this.field.shotAt(row, col);
 				isRecursivelyCalled = false;
 				//this.field.printFog();
@@ -220,11 +220,11 @@ public class BattleShips {
 				} else {
 					System.out.println("You missed!");
 				}
-			}/* else if((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 ) && this.field.isShot(row, col)) {
+			} else if((row <= 'J' && row >= 'A' ) && (col <= 10 && col > 0 ) && this.field.isShot(row, col)) {
 				System.out.println("Error! You alredy shot here! Try again:");
 				isRecursivelyCalled = true;
 				takeShot();
-			}*/ else {
+			} else {
 				System.out.println("Error! You entered the wrong coordinates! Try again:");
 				isRecursivelyCalled = true;
 				takeShot();
